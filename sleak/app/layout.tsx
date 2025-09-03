@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SleakTopbar } from "@/components/sleakui/topbar";
+import { SleakBottomBar } from "@/components/sleakui/bottombar";
+import { SleakSidebar } from "@/components/sleakui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +30,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} bg-black text-white ${geistMono.variable} antialiased`}
       >
-        {children}
+        <SleakTopbar />
+
+        <SleakSidebar />
+        <SleakBottomBar />
+        <main className="pt-18 md:pt-24 px-3 md:px-28">{children}</main>
       </body>
     </html>
   );
