@@ -7,7 +7,7 @@ export const navItems = [
   { href: "/code", label: "Code", icon: Code },
   { href: "/notes", label: "Notes", icon: NotebookIcon },
   { href: "/threads", label: "Threads", icon: Logs },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/settings", label: "Setting", icon: Settings },
 ]
 
 export function SleakSidebar() {

@@ -34,7 +34,7 @@ export default function RootLayout({
 
         <SleakSidebar />
         <SleakBottomBar />
-        <main className="pt-18 md:pt-24 px-3 md:px-28">{children}</main>
+        <main className="pt-18 md:pt-24 px-3 md:px-28" >{children}</main>
       </body>
     </html>
   );
