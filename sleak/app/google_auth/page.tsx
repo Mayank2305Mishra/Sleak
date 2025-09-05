@@ -1,4 +1,5 @@
 'use client'
+import { googleLogin } from '@/appwrite/user.action';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import React from 'react'
@@ -16,8 +17,8 @@ const page = () => {
                     Use your Google account to get started quickly and securely.
                 </p>
                 <Button
-                    onClick={()=>{console.log('Hello world')}}
-                    
+                    onClick={googleLogin}
+                    variant={'default'}
                     className="flex items-center justify-center gap-2 sm:gap-3 bg-white text-gray-700 
                    px-4 py-2 sm:px-5 sm:py-3 rounded-xl shadow-md border border-gray-200 
                    hover:shadow-lg hover:bg-gray-50 transition-all duration-300 ease-in-out w-full"
