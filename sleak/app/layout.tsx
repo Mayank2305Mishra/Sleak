@@ -52,9 +52,9 @@ export default function RootLayout({
             />
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
+                <BreadcrumbItem className="block">
                   <BreadcrumbLink href="#">
-                    Building Your Application
+                    SLEAK - AI productivity app
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </BreadcrumbList>

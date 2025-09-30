@@ -33,12 +33,13 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Icon } from "./icon"
+import Link from "next/link"
 
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "Mayank",
+    email: "mayank2305mishra@gmail.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
@@ -149,7 +150,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/">
+              <Link href="/">
                 <div className=" text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Icon h={120} w={120} />
                 </div>
@@ -157,7 +158,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <span className="truncate font-medium">SLEAK</span>
                   <span className="truncate text-xs">AI Docs</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

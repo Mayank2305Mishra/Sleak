@@ -41,13 +41,13 @@ const page = () => {
     }
   ]
   return (
-    <div className=' p-3'>
-      <div className='p-5'>
+    <div className=' p-1'>
+      <div className='p-3'>
       <h1 className='text-3xl font-semibold'>AI Agents</h1>
       </div>
-      <div className='flex-1 flex-col gap-4 p-4 pt-0 grid auto-rows-min md:grid-cols-3'>
+      <div className='flex-1 flex-col gap-4 p-2 pt-0 grid auto-rows-min md:grid-cols-3'>
         {agents.map((agent) => (
-          <div key={agent.name} className={` ${agent.bg} flex flex-col  items-center justify-center   aspect-video rounded-xl `}>
+          <div key={agent.name} className={` ${agent.bg} shadow-lg hover:shadow-xl flex flex-col  items-center justify-center   aspect-video rounded-xl `}>
             <Image src={agent.icon} alt='.' height={110} width={110}/>
             <h1 className='text-xl font-semibold'>{agent.name}</h1>
           </div>
