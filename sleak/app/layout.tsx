@@ -1,23 +1,33 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SleakTopbar } from "@/components/sleakui/topbar";
-import { SleakBottomBar } from "@/components/sleakui/bottombar";
-import { SleakSidebar } from "@/components/sleakui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+import { Poppins } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'], // Match the weights from your CSS
+  display: 'swap', // Use 'swap' for better loading performance
+  variable: '--font-poppins', // A CSS variable name for easy use
 });
 
 export const metadata: Metadata = {
   title: "Sleak",
-  description: "Your personal AI assistant",
+  description: "AI agent based productivity app",
 };
 
 export default function RootLayout({
@@ -28,13 +38,34 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} bg-black text-white ${geistMono.variable} antialiased`}
+        className={` ${poppins.className} antialiased`}
       >
-        <SleakTopbar />
-
-        <SleakSidebar />
-        <SleakBottomBar />
-        <main className="pt-18 md:pt-24 px-3 md:px-28" >{children}</main>
+        <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-4"
+            />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">
+                    Building Your Application
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+        </header>
+        <div className="flex flex-col gap-4 p-4 pt-0 bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min">
+          {children}
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
       </body>
     </html>
   );
