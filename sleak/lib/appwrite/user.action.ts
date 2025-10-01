@@ -3,14 +3,12 @@ import { account, avatars, databases } from "./appwrite";
 
 export async function googleLogin() {
     try {
-        const user = await account.createOAuth2Session(
-            OAuthProvider.Google,
-            `${window.location.origin}/profile`,
-            `${window.location.origin}/login`,
-        )
+        console.log('Hola')
+        const user = account.createEmailPasswordSession('mayank2305mishra@gmail.com','mayank@2305')
         return user;
     } catch (error: any) {
         throw new Error(error)
     }
 
 }
+
