@@ -1,3 +1,5 @@
+"use client"
+import { googleLogin } from '@/lib/appwrite/user.action'
 import { PlusIcon, Settings, StarIcon, } from 'lucide-react'
 import React from 'react'
 
@@ -36,6 +38,9 @@ const page = () => {
           </div>
         ))}
       </div>
+      <button onClick={googleLogin}>
+        Login
+      </button>
     </div>
   )
 }

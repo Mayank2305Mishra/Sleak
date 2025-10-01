@@ -29,7 +29,6 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button variant="outline" onClick={handleGoogleLogin} className="w-full">
@@ -43,7 +42,6 @@ export function LoginForm({
                 </Button>
               </div>
             </div>
-          </form>
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
