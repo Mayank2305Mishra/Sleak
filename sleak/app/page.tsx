@@ -42,9 +42,7 @@ const page = () => {
   ]
   return (
     <div className=' p-1'>
-      <div className='p-3'>
-      <h1 className='text-3xl font-semibold'>AI Agents</h1>
-      </div>
+      <h1 className='p-3 text-3xl font-bold'><b className='text-gray-500'>AI</b> Agents</h1>
       <div className='flex-1 flex-col gap-4 p-2 pt-0 grid auto-rows-min md:grid-cols-3'>
         {agents.map((agent) => (
           <div key={agent.name} className={` ${agent.bg} shadow-lg hover:shadow-xl flex flex-col  items-center justify-center   aspect-video rounded-xl `}>
