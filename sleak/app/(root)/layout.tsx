@@ -13,9 +13,9 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { useAuth } from "@/context/AuthContext"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { getAccount } from "../../lib/appwrite/user.action"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 
 
@@ -29,12 +29,11 @@ export default function RootLayout({
 
     useEffect(() => {
         if (!loading && !user) {
-            // User is not logged in, redirect to login
             router.replace("/login");
         }
     }, [user, loading, router]);
 
-    // Show loading state while checking auth
+    // Only show loading on initial auth check, not during navigation
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -45,7 +44,8 @@ export default function RootLayout({
             </div>
         );
     }
-    
+
+    // Don't render if user is not authenticated
     if (!user) {
         return null;
     }

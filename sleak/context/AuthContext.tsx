@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { getCurrentAccount, getAccount, storeUser, checkDB } from "@/lib/appwrite/user.action";
 import { Models } from "appwrite";
@@ -25,10 +25,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<Models.Document | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const isInitialized = useRef(false);
 
   const refreshUser = async () => {
     try {
-      setLoading(true);
+      // Only show loading state on initial load
+      if (!isInitialized.current) {
+        setLoading(true);
+      }
+      
       const currentUser = await getCurrentAccount();
       
       if (currentUser) {
@@ -54,6 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(null);
     } finally {
       setLoading(false);
+      isInitialized.current = true;
     }
   };
 
