@@ -74,10 +74,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
     useEffect(() => {
         checkAuthUser();
-        const auth = localStorage.getItem('googleAuth')
-        if(auth != 'true'){
-            route.push('/login')
-        }
     }, []);
 
     const values = {

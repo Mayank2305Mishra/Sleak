@@ -31,12 +31,13 @@ export async function getCurrentAccount() {
 
 export async function googleLogin() {
     try {
-        localStorage.setItem('googleAuth','true')
+        document.cookie = `is_logged_in=true; path=/; secure; samesite=strict`;
         const user = await account.createOAuth2Session(
             OAuthProvider.Google,
             `${window.location.origin}/`,
             `${window.location.origin}/login`,
         )
+        
         return user;
 
     } catch (error: any) {
