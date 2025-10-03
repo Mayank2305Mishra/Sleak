@@ -1,5 +1,6 @@
 import { ID, OAuthProvider, Query } from "appwrite";
 import { account, avatars, databases } from "./appwrite";
+import { profile } from "console";
 
 export async function getAccount() {
     try {
@@ -17,16 +18,31 @@ export async function getCurrentAccount() {
 
         const currentUser = await databases.listDocuments(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-            process.env.NEXT_PUBLIC_APPWRITE_USER_COLLECTION_ID!,
-            [Query.equal("userId", currentAccount.$id)]
+            process.env.NEXT_PUBLIC_APPWRITE_USER_ID!,
+            [Query.equal("email", currentAccount.email)]
         );
         if (!currentUser) throw Error;
 
         return currentUser.documents[0]
     } catch (error) {
-        console.error(error);
-
+        return undefined
     }
+}
+
+export async function googleLogin() {
+    try {
+        localStorage.setItem('googleAuth','true')
+        const user = await account.createOAuth2Session(
+            OAuthProvider.Google,
+            `${window.location.origin}/`,
+            `${window.location.origin}/login`,
+        )
+        return user;
+
+    } catch (error: any) {
+        throw new Error(error)
+    }
+
 }
 
 const getGooglePicture = async (accessToken: string) => {
@@ -45,45 +61,46 @@ const getGooglePicture = async (accessToken: string) => {
     }
 };
 
-export async function googleLogin() {
+export async function storeUser() {
     try {
-        await account.createOAuth2Session(
-            OAuthProvider.Google,
-            `${window.location.origin}/`,
-            `${window.location.origin}/login`,
-        )
-        const user = await getAccount()
-        const userData = await databases.listDocuments(
+        const user = await account.get();
+
+        if (!user) throw new Error("User not found");
+
+        const { providerAccessToken } = (await account.getSession("current")) || {};
+        const profilePicture = providerAccessToken
+            ? await getGooglePicture(providerAccessToken)
+            : null;
+        const createdUser = await databases.createDocument(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
             process.env.NEXT_PUBLIC_APPWRITE_USER_ID!,
-            [Query.equal("email", user?.email!)]
+            ID.unique(),
+            {
+                $id: user.$id,
+                email: user.email,
+                name: user.name,
+                avatarUrl: profilePicture,
+                $createdAt: user.$createdAt,
+                $updatedAt: user.$updatedAt
+            }
         );
-        if (userData.total == 0) {
-            if(!user) throw Error("User not found");
-            const { providerAccessToken } = (await account.getSession("current")) || {};
-            const profilePicture = providerAccessToken
-                ? await getGooglePicture(providerAccessToken)
-                : null;
-            const newUser = await databases.createDocument(
-                process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-                process.env.NEXT_PUBLIC_APPWRITE_USER_COLLECTION_ID!,
-                ID.unique(),
-                {
-                    email: user.email,
-                    $id: user.$id,
-                    avatarUrl: profilePicture,
-                    name: user.name,
-                    $createdAt: user.$createdAt,
-                    $updatedAt: user.$updatedAt
-                }
-            )
-            return newUser;
-        }
-        return user;
-        
+        return createdUser
     } catch (error: any) {
         throw new Error(error)
     }
+}
 
+export async function checkDB(email:string) {
+    try {
+        const checkDB = await databases.listDocuments(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+            process.env.NEXT_PUBLIC_APPWRITE_USER_ID!,
+            [Query.equal('email', email)]
+        )
+        return checkDB.total == 0 ? false : true;
+
+    } catch (error:any) {
+        throw new Error(error)
+    }
 }
 

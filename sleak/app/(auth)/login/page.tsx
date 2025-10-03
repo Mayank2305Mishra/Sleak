@@ -1,10 +1,21 @@
-import { GalleryVerticalEnd } from "lucide-react"
+'use client'
 
 import { LoginForm } from "@/components/login-form"
 import { Icon } from "@/components/icon"
+import { getAccount } from "@/lib/appwrite/user.action"
+import { useEffect } from "react"
 
 
 export default function LoginPage() {
+  const userData = async()=>{
+    const user = await getAccount()
+    console.log(user);
+    
+  }
+  useEffect(() => {
+    console.log(userData)
+  }, [])
+  
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">

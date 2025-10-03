@@ -1,3 +1,4 @@
+
 import React from 'react'
 import Code from '@/public/Code.png'
 import CalendarIcon from '@/public/Calendar.png'
@@ -6,6 +7,7 @@ import ImageGEN from '@/public/ImageGEN.png'
 import RAG from '@/public/RAG.png'
 import Research from '@/public/Research.png'
 import Image from 'next/image'
+import { useAuthContext } from '@/context/AuthContext'
 
 const page = () => {
   const agents = [
@@ -52,7 +54,6 @@ const page = () => {
         ))}
       </div>
       <br />
-      
     </div>
   )
 }
