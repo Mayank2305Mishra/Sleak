@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Icon } from "./icon"
 import Link from "next/link"
-import { useAuthContext } from "@/context/AuthContext"
+import { useAuth } from "@/context/AuthContext"
 
 
 const data = {
@@ -121,7 +121,7 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const {user} = useAuthContext()
+  const {user} = useAuth()
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
